@@ -1,11 +1,11 @@
-print('Entre com a leitura dos valores de parâmetros:')
+print('Entre com a leitura dos valores de parâmetros:\n')
 
-particulas_inalaveis = int(input('Partículas inaláveis (24h): '))
-particulas_inalaveis_finas = int(input('Partículas inaláveis finas (24h): '))
-ozonio = int(input('Ozônio (8h): '))
-monoxido_carbono = int(input('Monóxido de Carbono (8h): '))
-dioxido_nitrogenio = int(input('Dióxido de Nitrogênio (8h): '))
-dioxido_enxofre = int(input('Dióxido de Enxofre (8h): '))
+particulas_inalaveis = int(input('Partículas inaláveis (24h) '))
+particulas_inalaveis_finas = int(input('Partículas inaláveis finas (24h) '))
+ozonio = int(input('Ozônio (8h) '))
+monoxido_carbono = int(input('Monóxido de Carbono (8h) '))
+dioxido_nitrogenio = int(input('Dióxido de Nitrogênio (8h) '))
+dioxido_enxofre = int(input('Dióxido de Enxofre (8h) '))
 
 qualidade_ar = 0
 
