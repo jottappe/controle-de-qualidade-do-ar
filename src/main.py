@@ -1,13 +1,34 @@
 print('Entre com a leitura dos valores de parâmetros:\n')
 
-particulas_inalaveis = int(input('Partículas inaláveis (24h) '))
-particulas_inalaveis_finas = int(input('Partículas inaláveis finas (24h) '))
-ozonio = int(input('Ozônio (8h) '))
-monoxido_carbono = int(input('Monóxido de Carbono (8h) '))
-dioxido_nitrogenio = int(input('Dióxido de Nitrogênio (8h) '))
-dioxido_enxofre = int(input('Dióxido de Enxofre (8h) '))
+particulas_inalaveis = -1
+particulas_inalaveis_finas = -1
+ozonio = -1
+monoxido_carbono = -1
+dioxido_nitrogenio = -1
+dioxido_enxofre = -1
 
 qualidade_ar = 0
+
+while True:
+    try:
+        if particulas_inalaveis == -1:
+            particulas_inalaveis = float(input('Partículas inaláveis (24h) '))
+        if particulas_inalaveis_finas == -1:
+            particulas_inalaveis_finas = float(
+                input('Partículas inaláveis finas (24h) '))
+        if ozonio == -1:
+            ozonio = float(input('Ozônio (8h) '))
+        if monoxido_carbono == -1:
+            monoxido_carbono = float(input('Monóxido de Carbono (8h) '))
+        if dioxido_nitrogenio == -1:
+            dioxido_nitrogenio = float(input('Dióxido de Nitrogênio (8h) '))
+        if dioxido_enxofre == -1:
+            dioxido_enxofre = float(input('Dióxido de Enxofre (8h) '))
+        else:
+            break
+    except:
+        print('Digite apenas números.')
+
 
 # Lista de cores para exibição do resultado:
 BOA = '\033[1;32m'
