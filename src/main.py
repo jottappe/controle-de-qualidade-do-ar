@@ -12,18 +12,18 @@ qualidade_ar = 0
 while True:
     try:
         if particulas_inalaveis == None:
-            particulas_inalaveis = float(input('Partículas inaláveis (24h) '))
+            particulas_inalaveis = float(input('Digite a medida de partículas inaláveis (24h) '))
         if particulas_inalaveis_finas == None:
             particulas_inalaveis_finas = float(
-                input('Partículas inaláveis finas (24h) '))
+                input('Digite a medida de partículas inaláveis finas (24h) '))
         if ozonio == None:
-            ozonio = float(input('Ozônio (8h) '))
+            ozonio = float(input('Digite a medida de ozônio (8h) '))
         if monoxido_carbono == None:
-            monoxido_carbono = float(input('Monóxido de Carbono (8h) '))
+            monoxido_carbono = float(input('Digite a medida de monóxido de Carbono (8h) '))
         if dioxido_nitrogenio == None:
-            dioxido_nitrogenio = float(input('Dióxido de Nitrogênio (8h) '))
+            dioxido_nitrogenio = float(input('Digite a medida de dióxido de Nitrogênio (8h) '))
         if dioxido_enxofre == None:
-            dioxido_enxofre = float(input('Dióxido de Enxofre (8h) '))
+            dioxido_enxofre = float(input('Digite a medida de dióxido de Enxofre (8h) '))
         else:
             break
     except:
