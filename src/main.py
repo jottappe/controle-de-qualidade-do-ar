@@ -1,28 +1,28 @@
 print('Entre com a leitura dos valores de parâmetros:\n')
 
-particulas_inalaveis = -1
-particulas_inalaveis_finas = -1
-ozonio = -1
-monoxido_carbono = -1
-dioxido_nitrogenio = -1
-dioxido_enxofre = -1
+particulas_inalaveis = None
+particulas_inalaveis_finas = None
+ozonio = None
+monoxido_carbono = None
+dioxido_nitrogenio = None
+dioxido_enxofre = None
 
 qualidade_ar = 0
 
 while True:
     try:
-        if particulas_inalaveis == -1:
+        if particulas_inalaveis == None:
             particulas_inalaveis = float(input('Partículas inaláveis (24h) '))
-        if particulas_inalaveis_finas == -1:
+        if particulas_inalaveis_finas == None:
             particulas_inalaveis_finas = float(
                 input('Partículas inaláveis finas (24h) '))
-        if ozonio == -1:
+        if ozonio == None:
             ozonio = float(input('Ozônio (8h) '))
-        if monoxido_carbono == -1:
+        if monoxido_carbono == None:
             monoxido_carbono = float(input('Monóxido de Carbono (8h) '))
-        if dioxido_nitrogenio == -1:
+        if dioxido_nitrogenio == None:
             dioxido_nitrogenio = float(input('Dióxido de Nitrogênio (8h) '))
-        if dioxido_enxofre == -1:
+        if dioxido_enxofre == None:
             dioxido_enxofre = float(input('Dióxido de Enxofre (8h) '))
         else:
             break
@@ -140,7 +140,9 @@ elif qualidade_ar == 3:
 elif qualidade_ar == 2:
     print(f'A qualidade do ar está: {MODERADA}MODERADA{LIMPAR}!')
     print('Pessoas de grupos sensíveis (crianças, idosos, e pessoas com doenças respiratórias e cardíacas) podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.')
-else:
+elif qualidade_ar == 1:
     print(f'A qualidade do ar está: {BOA}BOA{LIMPAR}!')
+else:
+    print('Não foi possível, realizar a classificação, tente novamente.')
 
 print(40 * '-')
