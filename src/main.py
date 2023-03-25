@@ -12,18 +12,22 @@ qualidade_ar = 0
 while True:
     try:
         if particulas_inalaveis == None:
-            particulas_inalaveis = float(input('Digite a medida de partículas inaláveis (24h) '))
+            particulas_inalaveis = float(
+                input('Digite a medida de partículas inaláveis (24h) '))
         if particulas_inalaveis_finas == None:
             particulas_inalaveis_finas = float(
                 input('Digite a medida de partículas inaláveis finas (24h) '))
         if ozonio == None:
             ozonio = float(input('Digite a medida de ozônio (8h) '))
         if monoxido_carbono == None:
-            monoxido_carbono = float(input('Digite a medida de monóxido de Carbono (8h) '))
+            monoxido_carbono = float(
+                input('Digite a medida de monóxido de Carbono (8h) '))
         if dioxido_nitrogenio == None:
-            dioxido_nitrogenio = float(input('Digite a medida de dióxido de Nitrogênio (8h) '))
+            dioxido_nitrogenio = float(
+                input('Digite a medida de dióxido de Nitrogênio (8h) '))
         if dioxido_enxofre == None:
-            dioxido_enxofre = float(input('Digite a medida de dióxido de Enxofre (8h) '))
+            dioxido_enxofre = float(
+                input('Digite a medida de dióxido de Enxofre (8h) '))
         else:
             break
     except:
@@ -39,7 +43,7 @@ PESSIMA = '\033[1;31m'
 LIMPAR = '\033[m'
 
 # Verificar qualidade para MP10:
-if particulas_inalaveis > 0:
+if particulas_inalaveis >= 0:
     if particulas_inalaveis > 250:
         qualidade_ar = 5
     elif particulas_inalaveis > 150:
@@ -52,7 +56,7 @@ if particulas_inalaveis > 0:
         qualidade_ar = 1
 
 # Verificar qualidade para MP2,5:
-if particulas_inalaveis_finas > 0:
+if particulas_inalaveis_finas >= 0:
     if particulas_inalaveis_finas > 125:
         if qualidade_ar < 5:
             qualidade_ar = 5
@@ -67,7 +71,7 @@ if particulas_inalaveis_finas > 0:
             qualidade_ar = 2
 
 # Verificar qualidade para O3:
-if ozonio > 0:
+if ozonio >= 0:
     if ozonio > 200:
         if qualidade_ar < 5:
             qualidade_ar = 5
@@ -82,7 +86,7 @@ if ozonio > 0:
             qualidade_ar = 2
 
 # Verificar qualidade para CO:
-if monoxido_carbono > 0:
+if monoxido_carbono >= 0:
     if monoxido_carbono > 15:
         if qualidade_ar < 5:
             qualidade_ar = 5
@@ -97,7 +101,7 @@ if monoxido_carbono > 0:
             qualidade_ar = 2
 
 # Verificar qualidade para NO2:
-if dioxido_nitrogenio > 0:
+if dioxido_nitrogenio >= 0:
     if dioxido_nitrogenio > 1130:
         if qualidade_ar < 5:
             qualidade_ar = 5
@@ -112,7 +116,7 @@ if dioxido_nitrogenio > 0:
             qualidade_ar = 2
 
 # Verificar qualidade para SO2:
-if dioxido_enxofre > 0:
+if dioxido_enxofre >= 0:
     if dioxido_enxofre > 800:
         if qualidade_ar < 5:
             qualidade_ar = 5
