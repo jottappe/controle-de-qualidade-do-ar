@@ -37,3 +37,7 @@ Esta qualificação do ar está vinculada à norma legal (Resolução CONAMA n°
 ![Tabela de efeitos à saúde](https://cdn.discordapp.com/attachments/1082412218517291143/1082788934129557554/image.png)
 
 Individualmente, cada poluente apresenta diferentes efeitos sobre a saúde da população para faixas de concentração distintas, identificados por estudos epidemiológicos desenvolvidos dentro e fora do país. Tais efeitos sobre a saúde requerem medidas de prevenção a serem adotadas pela população afetada.
+
+<!-- pip install mysql-connector-python -->
+<!-- pip install tabulate -->
+<!-- pip install tdqm -->
