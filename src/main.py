@@ -1,38 +1,15 @@
-print('Entre com a leitura dos valores de parâmetros:\n')
+import mysql.connector as mysql
+from lib.progress_bar import *
+import math
 
-particulas_inalaveis = None
-particulas_inalaveis_finas = None
-ozonio = None
-monoxido_carbono = None
-dioxido_nitrogenio = None
-dioxido_enxofre = None
+conexao = mysql.connect(
+    host='us-cdbr-east-06.cleardb.net',
+    user='b1e1246e0d4eed',
+    password='dcd8e79b',
+    database='heroku_25b7ace0ee7f569',
+)
 
-qualidade_ar = 0
-
-while True:
-    try:
-        if particulas_inalaveis == None:
-            particulas_inalaveis = float(
-                input('Digite a medida de partículas inaláveis (24h) '))
-        if particulas_inalaveis_finas == None:
-            particulas_inalaveis_finas = float(
-                input('Digite a medida de partículas inaláveis finas (24h) '))
-        if ozonio == None:
-            ozonio = float(input('Digite a medida de ozônio (8h) '))
-        if monoxido_carbono == None:
-            monoxido_carbono = float(
-                input('Digite a medida de monóxido de Carbono (8h) '))
-        if dioxido_nitrogenio == None:
-            dioxido_nitrogenio = float(
-                input('Digite a medida de dióxido de Nitrogênio (8h) '))
-        if dioxido_enxofre == None:
-            dioxido_enxofre = float(
-                input('Digite a medida de dióxido de Enxofre (8h) '))
-        else:
-            break
-    except:
-        print('Digite apenas números.')
-
+cursor = conexao.cursor()
 
 # Lista de cores para exibição do resultado:
 BOA = '\033[1;32m'
@@ -42,111 +19,220 @@ MUITORUIM = '\033[1;35m'
 PESSIMA = '\033[1;31m'
 LIMPAR = '\033[m'
 
-# Verificar qualidade para MP10:
-if particulas_inalaveis >= 0:
-    if particulas_inalaveis > 250:
-        qualidade_ar = 5
-    elif particulas_inalaveis > 150:
-        qualidade_ar = 4
-    elif particulas_inalaveis > 100:
-        qualidade_ar = 3
-    elif particulas_inalaveis > 50:
-        qualidade_ar = 2
-    else:
-        qualidade_ar = 1
+# Declaração das variáveis par armazenamento das amostras
+mp10 = None
+mp25 = None
+o3 = None
+co = None
+no2 = None
+so2 = None
 
-# Verificar qualidade para MP2,5:
-if particulas_inalaveis_finas >= 0:
-    if particulas_inalaveis_finas > 125:
-        if qualidade_ar < 5:
-            qualidade_ar = 5
-    elif particulas_inalaveis_finas > 75:
-        if qualidade_ar < 4:
-            qualidade_ar = 4
-    elif particulas_inalaveis_finas > 50:
-        if qualidade_ar < 3:
-            qualidade_ar = 3
-    elif particulas_inalaveis_finas > 50:
-        if qualidade_ar < 2:
-            qualidade_ar = 2
+qualidade_ar = 0
+menu = 0
+menu_opcoes = ['Inserir Amostra', 'Alterar Amostra',
+               'Apagar Amostra', 'Classificar Amostras', 'Sair']
 
-# Verificar qualidade para O3:
-if ozonio >= 0:
-    if ozonio > 200:
-        if qualidade_ar < 5:
-            qualidade_ar = 5
-    elif ozonio > 160:
-        if qualidade_ar < 4:
-            qualidade_ar = 4
-    elif ozonio > 130:
-        if qualidade_ar < 3:
-            qualidade_ar = 3
-    elif ozonio > 100:
-        if qualidade_ar < 2:
-            qualidade_ar = 2
+while True:
+    print(30 * '-')
+    print('MENU'.center(30))
+    print(30 * '-')
+    c = 1
+    for opcao in menu_opcoes:
+        print(f'[{c}] - {opcao}')
+        c += 1
+    print(30 * '-')
+    try:
+        menu = int(input('Qual sua opção? '))
+        if menu > 5:
+            print('\033[31mERRO! Selecione uma opção disponível 1 a 5.\033[m')
+            continue
+    except:
+        print('\033[31mOpção Inválida!\033[m')
+        continue
 
-# Verificar qualidade para CO:
-if monoxido_carbono >= 0:
-    if monoxido_carbono > 15:
-        if qualidade_ar < 5:
-            qualidade_ar = 5
-    elif monoxido_carbono > 13:
-        if qualidade_ar < 4:
-            qualidade_ar = 4
-    elif monoxido_carbono > 11:
-        if qualidade_ar < 3:
-            qualidade_ar = 3
-    elif monoxido_carbono > 9:
-        if qualidade_ar < 2:
-            qualidade_ar = 2
+    if menu == 1:
+        print('Entre com a leitura dos valores de parâmetros:')
+        while True:
+            try:
+                if mp10 is None:
+                    mp10 = float(
+                        input('[MP10] Digite a medida de partículas inaláveis (24h) '))
+                if mp25 is None:
+                    mp25 = float(
+                        input('[MP2,5] Digite a medida de partículas inaláveis finas (24h) '))
+                if o3 is None:
+                    o3 = float(
+                        input('[03] Digite a medida de ozônio (8h) '))
+                if co is None:
+                    co = float(
+                        input('[CO] Digite a medida de monóxido de Carbono (8h) '))
+                if no2 is None:
+                    no2 = float(
+                        input('[NO2] Digite a medida de dióxido de Nitrogênio (8h) '))
+                if so2 is None:
+                    so2 = float(
+                        input('[SO2] Digite a medida de dióxido de Enxofre (8h) '))
+                else:
+                    break
+            except:
+                print('Digite apenas números.')
 
-# Verificar qualidade para NO2:
-if dioxido_nitrogenio >= 0:
-    if dioxido_nitrogenio > 1130:
-        if qualidade_ar < 5:
-            qualidade_ar = 5
-    elif dioxido_nitrogenio > 320:
-        if qualidade_ar < 4:
-            qualidade_ar = 4
-    elif dioxido_nitrogenio > 240:
-        if qualidade_ar < 3:
-            qualidade_ar = 3
-    elif dioxido_nitrogenio > 200:
-        if qualidade_ar < 2:
-            qualidade_ar = 2
+        sql = f'insert into amostras (mp10, mp25, o3, co, no2, so2) values ({mp10}, {mp25}, {o3}, {co}, {no2}, {so2});'
 
-# Verificar qualidade para SO2:
-if dioxido_enxofre >= 0:
-    if dioxido_enxofre > 800:
-        if qualidade_ar < 5:
-            qualidade_ar = 5
-    elif dioxido_enxofre > 365:
-        if qualidade_ar < 4:
-            qualidade_ar = 4
-    elif dioxido_enxofre > 40:
-        if qualidade_ar < 3:
-            qualidade_ar = 3
-    elif dioxido_enxofre > 20:
-        if qualidade_ar < 2:
-            qualidade_ar = 2
+        try:
+            cursor.execute(sql)
+            conexao.commit()
+        except Exception as err:
+            print('deu ruim')
+            print(err)
+        finally:
+            mp10 = None
+            mp25 = None
+            o3 = None
+            co = None
+            no2 = None
+            so2 = None
 
-print(40 * '-')
+            numbers = [x * 5 for x in range(1000, 2000)]
+            result = []
 
-if qualidade_ar == 5:
-    print(f'A qualidade do ar está: {PESSIMA}PÉSSIMA{LIMPAR}!')
-    print('Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. Aumento de mortes prematuras em pessoas de grupo sensíveis.')
-elif qualidade_ar == 4:
-    print(f'A qualidade do ar está: {MUITORUIM}MUITO RUIM{LIMPAR}!')
-    print('Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante. Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).')
-elif qualidade_ar == 3:
-    print(f'A qualidade do ar está: {RUIM}RUIM{LIMPAR}!')
-    print('Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta. Pessoas de grupos sensíveis (crianças, idosos, e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.')
-elif qualidade_ar == 2:
-    print(f'A qualidade do ar está: {MODERADA}MODERADA{LIMPAR}!')
-    print('Pessoas de grupos sensíveis (crianças, idosos, e pessoas com doenças respiratórias e cardíacas) podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.')
-elif qualidade_ar == 1:
-    print(f'A qualidade do ar está: {BOA}BOA{LIMPAR}!')
-else:
-    print('Não foi possível, realizar a classificação, tente novamente.')
+            progress_bar(0, len(numbers))
+            for i, x in enumerate(numbers):
+                result.append(math.factorial(x))
+                progress_bar(i + 1, len(numbers))
 
-print(40 * '-')
+            print(f'\n{BOA}SUCESSO!{LIMPAR} Sua amostra foi cadastrada.\n')
+            continue
+
+    elif menu == 2:
+        sql = 'select * from amostras'
+        # conexao.commit()
+        amostras = ''
+        try:
+            amostras = cursor.execute(sql)
+            amostras = cursor.fetchall()
+        except Exception as err:
+            print('deu ruim')
+            print(err)
+        finally:
+            for amostra in amostras:
+                print(
+                    f'id = {amostra[0]}, mp10 = {amostra[1]}, mp25 = {amostra[2]}, 03 = {amostra[3]}, co = {amostra[4]}, n02 = {amostra[5]}, so2 = {amostra[6]}')
+    elif menu == 3:
+        conexao.commit()
+    elif menu == 4:
+        # Verificar qualidade para MP10:
+        if mp10 >= 0:
+            if mp10 > 250:
+                qualidade_ar = 5
+            elif mp10 > 150:
+                qualidade_ar = 4
+            elif mp10 > 100:
+                qualidade_ar = 3
+            elif mp10 > 50:
+                qualidade_ar = 2
+            else:
+                qualidade_ar = 1
+
+        # Verificar qualidade para MP2,5:
+        if mp25 >= 0:
+            if mp25 > 125:
+                if qualidade_ar < 5:
+                    qualidade_ar = 5
+            elif mp25 > 75:
+                if qualidade_ar < 4:
+                    qualidade_ar = 4
+            elif mp25 > 50:
+                if qualidade_ar < 3:
+                    qualidade_ar = 3
+            elif mp25 > 50:
+                if qualidade_ar < 2:
+                    qualidade_ar = 2
+
+        # Verificar qualidade para O3:
+        if o3 >= 0:
+            if o3 > 200:
+                if qualidade_ar < 5:
+                    qualidade_ar = 5
+            elif o3 > 160:
+                if qualidade_ar < 4:
+                    qualidade_ar = 4
+            elif o3 > 130:
+                if qualidade_ar < 3:
+                    qualidade_ar = 3
+            elif o3 > 100:
+                if qualidade_ar < 2:
+                    qualidade_ar = 2
+
+        # Verificar qualidade para CO:
+        if co >= 0:
+            if co > 15:
+                if qualidade_ar < 5:
+                    qualidade_ar = 5
+            elif co > 13:
+                if qualidade_ar < 4:
+                    qualidade_ar = 4
+            elif co > 11:
+                if qualidade_ar < 3:
+                    qualidade_ar = 3
+            elif co > 9:
+                if qualidade_ar < 2:
+                    qualidade_ar = 2
+
+        # Verificar qualidade para NO2:
+        if no2 >= 0:
+            if no2 > 1130:
+                if qualidade_ar < 5:
+                    qualidade_ar = 5
+            elif no2 > 320:
+                if qualidade_ar < 4:
+                    qualidade_ar = 4
+            elif no2 > 240:
+                if qualidade_ar < 3:
+                    qualidade_ar = 3
+            elif no2 > 200:
+                if qualidade_ar < 2:
+                    qualidade_ar = 2
+
+        # Verificar qualidade para SO2:
+        if so2 >= 0:
+            if so2 > 800:
+                if qualidade_ar < 5:
+                    qualidade_ar = 5
+            elif so2 > 365:
+                if qualidade_ar < 4:
+                    qualidade_ar = 4
+            elif so2 > 40:
+                if qualidade_ar < 3:
+                    qualidade_ar = 3
+            elif so2 > 20:
+                if qualidade_ar < 2:
+                    qualidade_ar = 2
+
+        print(40 * '-')
+
+        if qualidade_ar == 5:
+            print(f'A qualidade do ar está: {PESSIMA}PÉSSIMA{LIMPAR}!')
+            print('Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. Aumento de mortes prematuras em pessoas de grupo sensíveis.')
+        elif qualidade_ar == 4:
+            print(f'A qualidade do ar está: {MUITORUIM}MUITO RUIM{LIMPAR}!')
+            print('Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante. Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).')
+        elif qualidade_ar == 3:
+            print(f'A qualidade do ar está: {RUIM}RUIM{LIMPAR}!')
+            print('Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta. Pessoas de grupos sensíveis (crianças, idosos, e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.')
+        elif qualidade_ar == 2:
+            print(f'A qualidade do ar está: {MODERADA}MODERADA{LIMPAR}!')
+            print('Pessoas de grupos sensíveis (crianças, idosos, e pessoas com doenças respiratórias e cardíacas) podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.')
+        elif qualidade_ar == 1:
+            print(f'A qualidade do ar está: {BOA}BOA{LIMPAR}!')
+        else:
+            print('Não foi possível, realizar a classificação, tente novamente.')
+
+        print(40 * '-')
+        print('\n\n')
+    elif menu == 5:
+        print('Saindo...')
+        break
+
+cursor.close()
+conexao.close()
