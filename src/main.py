@@ -23,13 +23,6 @@ def limpa_amostras():
     global no2
     global so2
 
-    mp10 = None
-    mp25 = None
-    o3 = None
-    co = None
-    no2 = None
-    so2 = None
-
 
 def limpa_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -136,6 +129,12 @@ while True:
             print(f'\n{VERDE}SUCESSO!{LIMPAR} Sua amostra foi cadastrada.\n')
 
             input('\n\nPressione qualquer tecla para continuar...')
+            mp10 = None
+            mp25 = None
+            o3 = None
+            co = None
+            no2 = None
+            so2 = None
             limpa_terminal()
 
             continue
