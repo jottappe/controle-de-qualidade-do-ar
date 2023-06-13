@@ -66,20 +66,23 @@ so2 = None
 qualidade_ar = 0
 menu = 0
 
+lista_parametros = ["mp10", "mp25", "o3", "co", "no2", "so2"]
+
 while True:
     interface.menu(
         [
             "Inserir Amostra",
-            # "Alterar Amostra",
-            # "Apagar Amostra",
+            "Alterar Amostra",
+            "Apagar Amostra",
             "Classificar Amostras",
+            "Listar Amostras",
             "Sair",
         ]
     )
     try:
         menu = int(input("Qual sua opção? "))
-        if menu > 3 or menu <= 0:
-            print("\033[31mERRO! Selecione uma opção disponível 1 a 3.\033[m")
+        if menu > 6 or menu <= 0:
+            print("\033[31mERRO! Selecione uma opção disponível 1 a 6.\033[m")
             continue
     except:
         print("\033[31mOpção Inválida!\033[m")
@@ -121,9 +124,9 @@ while True:
         except Exception as err:
             print(f"{VERMELHO}Erro ao cadastrar amostra, tente novamente!{LIMPAR}")
         finally:
-            interface.progress()
-
             print(f"\n{VERDE}SUCESSO!{LIMPAR} Sua amostra foi cadastrada.\n")
+
+            listar = selecionar_amostras()
 
             input("\n\nPressione qualquer tecla para continuar...")
             mp10 = None
@@ -137,25 +140,105 @@ while True:
             continue
 
     # Editar valores de amostras
-    # elif menu == 2:
-    #     update = selecionar_amostras()
+    elif menu == 2:
+        update = selecionar_amostras()
 
-    #     if update == 1:
-    #         ...
-    #     elif update == 2:
-    #         print(f"{VERMELHO}Erro ao selecionar amostras, tente novamente!{LIMPAR}")
-    # update amostras set {parametro} = {novo_valor} where id = {linha};
-    # parametro = input(int('Qual parâmetro você deseja alterar?'))
-    # id = 0
+        amostra_id = None
+        parametro = None
+        valor = None
+
+        if update == 1:
+            while True:
+                try:
+                    if amostra_id is None:
+                        amostra_id = int(
+                            input(
+                                "Qual amostra você deseja editar? Digite o ID da linha. "
+                            )
+                        )
+
+                    if parametro is None:
+                        print("\nParâmetros existentes: ")
+                        for i in range(6):
+                            print(f"[{i+1}] - {lista_parametros[i].upper()}")
+
+                        parametro = int(
+                            input("Qual o parâmetro que você deseja alterar? ")
+                        )
+
+                        if parametro > 6 or parametro < 0:
+                            print(
+                                f"{VERMELHO}Opção inválida, digite apenas valores de 1 a 6.{LIMPAR}"
+                            )
+                            continue
+
+                    if valor is None:
+                        valor = int(input("Qual o novo valor a ser inserido? "))
+
+                    break
+                except:
+                    print(f"Digite apenas números.")
+
+            sql = f"update amostras set {lista_parametros[parametro-1]} = {valor} where id = {amostra_id};"
+
+            try:
+                cursor.execute(sql)
+                conexao.commit()
+            except Exception as err:
+                print(f"{VERMELHO}Erro ao editar amostra, tente novamente!{LIMPAR}")
+            finally:
+                print(f"\n{VERDE}SUCESSO!{LIMPAR} Sua amostra foi editada.\n")
+
+                listar = selecionar_amostras()
+
+                input("\n\nPressione qualquer tecla para continuar...")
+                limpa_terminal()
+
+                continue
+
+        elif update == 2:
+            print(f"{VERMELHO}Erro ao selecionar amostras, tente novamente!{LIMPAR}")
+
+        input("\n\nPressione qualquer tecla para continuar...")
+        limpa_terminal()
+
+        continue
 
     # Deletar uma amostra
-    # elif menu == 3:
-    #     delete = selecionar_amostras()
+    elif menu == 3:
+        delete = selecionar_amostras()
+        while True:
+            try:
+                del_amostra = int(input("Digite o ID da amostra que deseja excluir: "))
+                break
+            except:
+                print(f"Digite apenas números.")
 
-    # conexao.commit()
+        amostras = None
+        try:
+            sql = f"delete from amostras where id = {del_amostra}"
+            amostras = cursor.execute(sql)
+            conexao.commit()
+        except:
+            print("{VERMELHO}Erro ao deletar amostra, tente novamente!{LIMPAR}")
+        finally:
+            print(f"\n{VERDE}SUCESSO!{LIMPAR} Sua amostra foi excluida.\n")
+
+            listar = selecionar_amostras()
+
+            input("\n\nPressione qualquer tecla para continuar...")
+            mp10 = None
+            mp25 = None
+            o3 = None
+            co = None
+            no2 = None
+            so2 = None
+            limpa_terminal()
+
+            continue
 
     # Classificar amostras
-    elif menu == 2:
+    elif menu == 4:
         amostras = None
         try:
             amostras = cursor.execute(
@@ -165,6 +248,8 @@ while True:
         except Exception as err:
             print(f"{VERMELHO}Erro ao selecionar amostras, tente novamente!{LIMPAR}")
         finally:
+            imprimir_tabulado(amostras, ["MP10", "MP25", "O3", "CO", "NO2", "SO2"])
+
             if amostras is None:
                 print("Não há amostras para classificação. Insira uma nova amostra!\n")
             else:
@@ -296,7 +381,17 @@ while True:
                 input("\n\nPressione qualquer tecla para continuar...")
                 limpa_terminal()
 
-    elif menu == 3:
+    # Listar amostras cadastradas
+    elif menu == 5:
+        listar = selecionar_amostras()
+
+        input("\n\nPressione qualquer tecla para continuar...")
+        limpa_terminal()
+
+        continue
+
+    # Sair do sistema
+    elif menu == 6:
         print("Saindo...")
         break
 
