@@ -2,6 +2,16 @@
 
 # Controle de Qualidade do Ar e Efeito à Saúde
 
+## Módulos necessários
+
+```shell
+pip install mysql-connector-python
+```
+
+```shell
+pip install tabulate
+```
+
 ## Tecnologias utilizadas
 
 ![Python 3.7 (Serviço)](https://img.shields.io/badge/Python-3.11-4b8bbe?logo=Python&logoColor=4b8bbe)

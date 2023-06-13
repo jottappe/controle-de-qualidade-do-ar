@@ -2,7 +2,6 @@ import mysql.connector as mysql
 import lib.interface as interface
 from tabulate import tabulate
 from time import sleep
-from tqdm import tqdm
 import os
 
 conexao = mysql.connect(
